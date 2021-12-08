@@ -23,8 +23,8 @@
     <link rel="icon" type="image/png" href="#" sizes="48x48">
     <!-- PERFORMANCE -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
-    <link rel="preload" as="style" href="style.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="preload" as="style" href="../../style.css">
+    <link rel="stylesheet" href="../../style.css">
     <!-- TITLE -->
     <title>Job Crypt</title>
 </head>
@@ -34,11 +34,11 @@
         <div class="ui-layout-container">
             <div class="ui-section-header__layout ui-layout-flex">
                 <!-- LOGO -->
-                <a href="#" role="link" aria-label="#">
-                    <img src="media/jclogo.svg" height="50" width="50" /><b>Job Crypt</b>
+                <a href="../../index.html" role="link" aria-label="#">
+                    <img src="../../media/jclogo.svg" height="50" width="50" /><b>Job Crypt</b>
                 </a>
                 <!-- MENU -->
-                <a href="post.html"> <button type="submit" class="ui-component-button ui-component-button-medium ui-component-button-primary">Post a Job</button> </a>
+                <a href="../app/post.html"> <button type="submit" class="ui-component-button ui-component-button-medium ui-component-button-primary">Post a Job</button> </a>
                 <a href="#" role="link" aria-label="#">
                     <svg viewBox="0 0 24 24" height="18" width="18" fill="none" stroke="#353535" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" role="img" aria-label="#">
               <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
@@ -48,9 +48,19 @@
                     <tr>
                         <td> <a href="">Connect Web 3</a></td>
                     </tr>
+
                     <tr>
                         <td align="center">
-                            <font size="1">Earn Rewards</font>
+                            <div class="ui-component-card ">
+                                <h6>Select Dashboard</h6>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <a href="../jobseeker/job_seeker_dashboard.html">  Job Seeker
+                                            </a></td>
+                                    </tr>
+                                </table>
+                            </div>
                         </td>
                     </tr>
                 </table>
@@ -61,41 +71,39 @@
         <section class="ui-section-hero">
             <div class="ui-layout-container">
                 <!-- COPYWRITING -->
-                <div class="ui-layout-column-6 ui-layout-column-center">
-                    <h1>Search for your Dream Decentralized Job.</h1>
-                    <div class="ui-component-cta ui-layout-flex">
-                        <form action="#" class="ui-component-form ui-layout-grid ui-layout-column-4">
-                            <input type="email" placeholder="Search e.g. Solidity" class="ui-component-input ui-component-input-medium" required>
-                            <button type="submit" class="ui-component-button ui-component-button-medium ui-component-button-primary">Search</button>
-                        </form>
-                        <p class="ui-text-note"></p>
+                <div class="ui-layout-column-8 ui-layout-column-center">
+                    <div class=" ui-component-card ui-layout-column-8 ">
+                        <h2>Your Latest Job Postings</h2>
                         <table>
                             <tr>
-                                <td colspan="4"><small><b>Quick search</b></small></td>
+                                <th>Post Date</th>
+                                <th>Title</th>
+                                <th>Applicants</th>
+                                <th>Expiry Date</th>
+                                <th>Status</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                             <tr>
-                                <td><a href="" style="color: rgb(18, 22, 236);"><b>All Jobs</b></a></td>
-                                <td><a href="" style="color: rgb(18, 22, 236);"><b>Remote</b></a></td>
-                                <td><a href="" style="color: rgb(18, 22, 236);"><b>Solidity</b></a></td>
-                                <td><a href="" style="color: rgb(18, 22, 236);"><b>Manager</b></a></td>
-                            </tr>
-                            <tr>
-                                <td><a href="" style="color: rgb(18, 22, 236);"><b>Co-Founder</b></a></td>
-                                <td><a href="" style="color: rgb(18, 22, 236);"><b>Team Lead</b></a></td>
-                                <td><a href="" style="color: rgb(18, 22, 236);"><b>Developer</b></a></td>
-                                <td><a href="" style="color: rgb(18, 22, 236);"><b>Marketing</b></a></td>
-                            </tr>
-                            <tr>
-                                <td><a href="" style="color: rgb(18, 22, 236);"><b>DeFi</b></a></td>
-                                <td><a href="" style="color: rgb(18, 22, 236);"><b>NFT</b></a></td>
-                                <td><a href="" style="color: rgb(18, 22, 236);"><b>Intern</b></a></td>
-                                <td><a href="" style="color: rgb(18, 22, 236);"><b>Compliance</b></a></td>
-                            </tr>
-                            <tr>
-                                <td><a href="" style="color: rgb(18, 22, 236);"><b>Communit</b></a></td>
-                                <td><a href="" style="color: rgb(18, 22, 236);"><b>Trader</b></a></td>
-                                <td><a href="" style="color: rgb(18, 22, 236);"><b>Designer</b></a></td>
-                                <td><a href="" style="color: rgb(18, 22, 236);"><b>Chief-something</b></a></td>
+                                <td>2021/12/01 10:00 GMT</td>
+                                <td>
+                                    <a href="../app/job_detail_template.html" target="_blank"><b>DeFi Community Manager</b></a></td>
+                                <td>65</td>
+                                <td>2021/12/15 10:00 GMT</td>
+                                <td>ACTIVE</td>
+                                <td>
+                                    <select class="ui-component-form">
+                                        <option>Select option</option>
+                                        <option>Edit</option> <!-- edit posting   -->
+                                        <option>Extend</option> <!-- extend posting   -->
+                                        <option>Fill</option> <!-- mark posting filled   -->
+                                        <option>Withdraw</option> <!-- posting will may return -->
+                                        <option>Cancel</option> <!-- posting will not be returning -->
+                                        <option>Delete</option> <!-- clear posting from list  -->
+                                </select>
+                                </td>
+                                <td> <button type="submit " class="ui-component-button ui-component-button-medium ui-component-button-primary ">Submit</button></td>
+
                             </tr>
                         </table>
                     </div>
@@ -103,38 +111,6 @@
             </div>
         </section>
 
-        <section class="ui-section-content">
-            <div class="ui-layout-container ">
-                <div class="ui-layout-column-6 ui-layout-column-center ">
-                    <table>
-                        <tr>
-                            <td>
-                                <div class=" ui-component-card ui-layout-column-4 ">
-                                    <h4 class="ui-component-card--title ">${Job Title} </h4>
-                                    <h5>${company} ${location type} ${pay type} ${post-age}</h5>
-                                    <p>${head-line} ${more}</p>
-                                </div>
-                                <div class="ui-component-card ui-layout-column-4 ">
-                                    <h4 class="ui-component-card--title ">${Job Title} </h4>
-                                    <h5>${company} ${location type} ${pay type} ${post-age}</h5>
-                                    <p>${head-line} ${more}</p>
-                                </div>
-                            </td>
-                            <td>
-                                <h6 align="right">Older Jobs</h6>
-                                <div class=" ui-component-card ui-layout-column-4 ">
-                                    ${older job title}${age} ${applicants}
-                                    <br/> ${older job title}${age} ${applicants}
-                                    <br/> ${older job title}${age} ${applicants}
-                                    <br/> ${older job title}${age} ${applicants}
-                                    <br/>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </section>
 
 
         <section class=" ui-section-close ">
