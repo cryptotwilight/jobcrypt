@@ -1,2 +1,2 @@
-# jobcrypt
-This is the Job Crypt repository 
+## JobCrypt - Web3 jobs for blockchain people
+The purpose of this project is to build the JobCrypt website. 
