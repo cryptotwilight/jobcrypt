@@ -25,6 +25,15 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
     <link rel="preload" as="style" href="../../style.css">
     <link rel="stylesheet" href="../../style.css">
+
+    <script src="https://unpkg.com/ipfs-http-client-lite/dist/index.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/ethjs@0.3.4/dist/ethjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <!-- Web 3 -->
+    <script type="text/javacript" src="../../assets/abi/i_jc_jobcrypt_abi.js"></script>
+    <script type="text/javacript" src="../../assets/abi/i_jc_job_posting_abi.js"></script>
     <!-- TITLE -->
     <title>Job Crypt - Web 3 Jobs for Blockchain People</title>
 </head>
@@ -44,9 +53,21 @@
               <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
             </svg>
                 </a>
+            </a>
+            <a href="https://discord.gg/JgBEEtaSmD " target="_blank" role="link " aria-label="# ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-discord" viewBox="0 0 16 16">
+                    <path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z"/>
+                  </svg>
+            </a>
+            <a href="https://www.tiktok.com/@jobcrypt" target="_blank" role="link " aria-label="# ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tiktok" viewBox="0 0 16 16">
+                    <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3V0Z"/>
+                  </svg>
+            </a>
+        </div>
                 <table>
                     <tr>
-                        <td> <a href="">Connect Web 3</a></td>
+                        <td> <a id="connect_web_3">Connect Web 3</a></td>
                     </tr>
                     <tr>
                         <td align="center">
@@ -57,6 +78,7 @@
             </div>
         </div>
     </header>
+    <center><span id="showAccount"></span></center>
     <main role="main">
         <section class="ui-section-hero">
             <div class="ui-layout-container">
@@ -69,18 +91,11 @@
                             <button type="submit" class="ui-component-button ui-component-button-medium ui-component-button-primary">Search</button>
                         </form>
                         <p class="ui-text-note"></p>
-                        <table>
+                        <table id="hot_search_table">
                             <tr>
                                 <td colspan="4 "><small><b>Hot search</b></small></td>
                             </tr>
-                            <tr>
-                                <span id="hot_search">
-                                <td><a href="#" style="color: rgb(18, 22, 236); "><b>All Jobs | </b></a></td>
-                                <td><a href="#" style="color: rgb(18, 22, 236); "><b>Remote | </b></a></td>
-                                <td><a href="#" style="color: rgb(18, 22, 236); "><b>Solidity | </b></a></td>
-                                <td><a href="#" style="color: rgb(18, 22, 236); "><b>Blockchain Manager </b></a></td>
-                                </span>
-                            </tr>
+                            <!-- populate hot job searches -->
                         </table>
                     </div>
                 </div>
@@ -96,67 +111,26 @@
                             <td valign="top">
                                 <h6>Popular Jobs</h6>
                                 <div class=" ui-component-card ui-layout-column-2 " id="popular_jobs">
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                <br/>Senior Infrastructure Engineer<br/> &nbsp;
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <br/>Senior Frontend Engineer<br/> &nbsp;
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <br/>Email Marketing Executive<br/> &nbsp;
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <br/>Social Media Manager<br/> &nbsp;
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <br/>Senior Solidity Developer<br/> &nbsp;
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <br/>Substrate Rust Developer<br/> &nbsp;
-                                            </td>
-                                        </tr>
+                                    <table id="popular_jobs_table">
+                                        <!-- populate popular jobs -->
                                     </table>
-
                             </td>
                             <td valign="top">
                                 <h6 align="center">Search Results</h6>
                                 <div class=" ui-component-card ui-layout-column-6 ">
-                                    <table>
-                                        <tr>
-                                            <td>${company}
-                                            </td>
-                                            <td>${title}
-                                            </td>
-                                            <td>${location}
-                                            </td>
-                                            <td>${age}
-                                            </td>
-                                            <td>Apply
-                                            </td>
-                                        </tr>
+                                    <table id="results_table">
+                                        <!-- populate result -->
                                     </table>
                                 </div>
                             </td>
                             <td valign="top">
                                 <h6 align="right">Featured Jobs</h6>
                                 <div class=" ui-component-card ui-layout-column-4 ">
-                                    ${older job title}${age} ${applicants}
-                                    <br/> ${older job title}${age} ${applicants}
-                                    <br/> ${older job title}${age} ${applicants}
-                                    <br/> ${older job title}${age} ${applicants}
-                                    <br/>
+                                    <center>
+                                        <table id="featured_jobs_table">
+                                            <!-- populate featured jobs-->
+                                        </table>
+                                    </center>
                                 </div>
                             </td>
                         </tr>
@@ -185,32 +159,47 @@
     <footer role="contentinfo " class="ui-section-footer ">
         <div class="ui-layout-container ">
             <div class="ui-section-footer__layout ui-layout-flex ">
+
+                <!-- COPYRIGHT -->
+                <p class="ui-section-footer--copyright ui-text-note "><small>&copy; 2022 Job Crypt</small>
+                    <br/><small>Framework by <a href="https://uisual.com/ " target="_blank ">Uisual</a></small>
+                    <br/><small>Powered By <a href="https://www.blockstarlogic.com/obei " target="_blank ">Open Block EI</a></small>
+                </p>
                 <p>
                     <table>
                         <tr>
                             <td>
-                                <a href="pages/app/about.html">about</a>
+                                <a href="01_about.html ">about | </a>
                             </td>
                             <td>
-                                <a href="pages/app/terms.html">terms</a>
+                                <a href="03_terms.html">terms | </a>
                             </td>
                             <td>
-                                <a href="pages/app/privacy.html" d>privacy policy</a>
+                                <a href="02_privacy.html">privacy policy | </a>
                             </td>
                             <td>
-                                <a href="pages/app/privacy.html" d>cookie policy</a>
+                                <a href="#">cookie policy </a>
                             </td>
                         </tr>
                     </table>
-                </p>
-                <!-- COPYRIGHT -->
-                <p class="ui-section-footer--copyright ui-text-note "><small>&copy; 2021 Job Crypt</small>
-                    <br/><small>Template by Uisual</small>
                 </p>
 
             </div>
         </div>
     </footer>
+
+    <script>
+        var popular = true;
+        var latest = false;
+        var featured = true;
+        var search = true;
+        var jobseeker = false;
+        var employer = false;
+        var results = true;
+        var jobDetail = false;
+        var isConnected = false; 
+    </script>
+    <script src="../../assets/js/jobcrypt.js"></script>
 </body>
 
 </html>
