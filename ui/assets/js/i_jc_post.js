@@ -61,6 +61,7 @@ async function loadProducts() {
         var productAddresses = response; 
         for(var x = 0; x < productAddresses.length; x++){ 
             var productAddress = productAddresses[x];
+            console.log(productAddress);
             populateProductSelect(productAddress, jobPostingProductSelect);
         }
     })
@@ -69,39 +70,60 @@ async function loadProducts() {
     })
 }
 
-function populateProductSelect(productAddress, jobPostingProductSelect){
+async function populateProductSelect(productAddress, jobPostingProductSelect){
+    console.log(productAddress);
     productContract = getContract(iOpenProductAbi, productAddress);
+    console.log(productContract.options.address);
+    populateProductSelectName(productContract, jobPostingProductSelect, productAddress);
+}
 
+async function populateProductSelectName(productContract, jobPostingProductSelect, productAddress){
     productContract.methods.getName().call({from : account})
     .then(function(response){
         console.log(response);
         var name = response; 
-        productContract.methods.getPrice().call({from : account})
-        .then(function(response){
-            console.log(response);
-            var price = response; 
-            productContract.methods.getCurrency().call({from : account})
-            .then(function(response){
-                console.log(response);
-                var currency = response;
-                var option = document.createElement("option");
-                var optionTxt = name + " - " + price + "("+currency+")";
-                var txt = document.createTextNode(optionTxt);
-                option.appendChild(txt);
-                option.setAttribute("value", productAddress);
-                jobPostingProductSelect.appendChild(option);
-            })
-            .catch(function(err){
-                console.log(err);
-            });
-        })
-        .catch(function(err){
-            console.log(err);
-        });
+        console.log(productContract.options.address);
+        populateProductSelectPrice(productContract, name, jobPostingProductSelect, productAddress);
     })
     .catch(function(err){
         console.log(err);
     });
+}
+
+async function populateProductSelectPrice(productContract, name, jobPostingProductSelect, productAddress){
+    var price = 0; 
+    console.log(productContract.options.address);
+    await productContract.methods.getPrice().call({from : account})
+    .then(function(response){
+        console.log(response + " :: " + name );
+        price = response; 
+        populateProductSelectCurrency(productContract, name, price, jobPostingProductSelect, productAddress);
+    })
+    .catch(function(err){
+        console.log(err);
+    })
+
+}
+
+async function populateProductSelectCurrency(productContract, name, price, jobPostingProductSelect, productAddress){
+    productContract.methods.getCurrency().call({from : account})
+    .then(function(response){
+        console.log(response);
+        var currency = response;
+        var option = document.createElement("option");
+        var optionTxt = name + " - " + formatPrice(price) + " ("+currency+")";
+        var txt = document.createTextNode(optionTxt);
+        option.appendChild(txt);
+        option.setAttribute("value", productAddress);
+        jobPostingProductSelect.appendChild(option);
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+}
+
+function formatPrice(price) {
+    return price / 1e18; 
 }
 
 async function createPosting() {
@@ -128,14 +150,30 @@ async function updateDraftListings() {
         .then(function(response) {
             console.log(response);
             var allPostings = response;
-            for (var x = 0; x < allPostings.length; x++) {
-                var postingAddress = allPostings[x];
-                processDraftPosting(postingAddress);                
+            if(allPostings.length > 0){
+                jobPostingDraftSelect.disabled = false;
+                for (var x = 0; x < allPostings.length; x++) {
+                    var postingAddress = allPostings[x];
+                    processDraftPosting(postingAddress);                
+                }
+            }
+            else {
+                appendNoDraftsFound(jobPostingDraftSelect);
             }
         })
         .catch(function(err) {
             console.log(err);
+            appendNoDraftsFound(jobPostingDraftSelect);
         })
+}
+
+function appendNoDraftsFound(select){
+    var option = document.createElement("option");
+    titleTxt = "No Drafts Found" ;
+    var txt = document.createTextNode(titleTxt);
+    option.appendChild(txt);
+    select.appendChild(option);
+    select.disabled = true; 
 }
 
 function processDraftPosting(postingAddress) {
@@ -289,16 +327,16 @@ function editListing() {
             console.log(err);
         })
 
-    /*
-        postingContract.methods.getFeature("JOB_APPLICATION_LINK").call({from : account})
-        .then(function(response){
-            console.log(response);
-            jobApplicationlink.value = response; 
-        })
-        .catch(function(err){
-            console.log(err);
-        })
-    */
+    
+    postingContract.methods.getApplyLink().call({from : account})
+    .then(function(response){
+        console.log(response);
+        jobApplicationlink.value = response; 
+    })
+    .catch(function(err){
+        console.log(err);
+    })
+    
 
     postingContract.methods.getSkillsRequired().call({ from: account })
         .then(function(response) {
@@ -329,10 +367,10 @@ function editListing() {
         })
 }
 
-
+var productContract;
 function updatePaymentBox(productAddress, postingAddress) {
     console.log(postingAddress);
-    var productContract = getContract(iOpenProductAbi, productAddress);
+    productContract = getContract(iOpenProductAbi, productAddress);
     console.log("product contract");
     console.log(productContract);
     productContract.methods.getFeatureUINTValue("DURATION").call({ from: account })
@@ -371,18 +409,42 @@ function updatePaymentBox(productAddress, postingAddress) {
 
 async function approveCurrency() {
 
-    var erc20Address = jobPostingCurrencyErc20Address.value;
-    var approvalAmount = tokenAmountField.value;
-    var erc20Contract = getContract(iERC20Abi, erc20Address);
-    erc20Contract.methods.approve(account, approvalAmount)
-        .then(function(response) {
-            console.log(response);
-            jobPostingPaytDisplay.innerHTML = "Approved : " + response.hash;
-        })
-        .catch(function(err) {
-            console.log(err);
-        })
+    productContract.methods.getPrice().call({from : account})
+    .then(function(response){
+        console.log(response);
+        var price = response; 
+        approve_1(productContract, price);
+    })
+    .catch(function(err) {
+        console.log(err);
+    });
+
 }
+
+async function approve_1(productContract, price){
+    productContract.methods.getErc20().call({from : account})
+    .then(function(response){
+        console.log(response);
+        var erc20Address = response; 
+        approve_2(erc20Address, price);
+    })
+    .catch(function(err) {
+        console.log(err);
+    });
+}
+
+async function approve_2(erc20Address, price){
+    var erc20Contract = getContract(iERC20Abi, erc20Address);
+    erc20Contract.methods.approve(jcPaymentManagerAddress, price).send({from : account})
+    .then(function(response) {
+        console.log(response);
+        jobPostingPaytDisplay.innerHTML = "Approved : " + response.blockHash;
+    })
+    .catch(function(err) {
+        console.log(err);
+    });
+}
+
 
 async function buyPosting() {
 
@@ -440,6 +502,7 @@ async function saveToEVM(jobJSON, hash) {
                 console.log(err);
 
             });
+   
 }
 
 function getJobToPost() {

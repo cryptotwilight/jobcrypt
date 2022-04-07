@@ -1,4 +1,4 @@
-const iJCEmployerDashboardAbi =[
+const iJCEmployerDashboardAbi = [
 	{
 		"inputs": [
 			{

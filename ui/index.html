@@ -45,7 +45,7 @@
             <div class="ui-section-header__layout ui-layout-flex ">
                 <!-- LOGO -->
                 <a href="# " role="link " aria-label="# ">
-                    <img src="media/jclogo.svg " height="50 " width="50 " /><b>Job Crypt</b>
+                    <img src="media/jclogo.svg " height="50 " width="50 " /><b>Job Crypt</b><br/><small><center>[PUBLIC-ALPHA]</center></small></b>
                 </a>
                 <!-- MENU -->
                 <a href="pages/app/post.html "> <button type="submit " class="ui-component-button ui-component-button-medium ui-component-button-primary ">Post a Job</button> </a>
@@ -72,7 +72,7 @@
                     </tr>
                     <tr>
                         <td>
-
+                           
                         </td>
                     </tr>
                     <tr>
@@ -80,6 +80,14 @@
                             <div class="ui-component-card ">
                                 <h6>Select Dashboard</h6>
                                 <table>
+                                    <tr>
+                                        <td>                                           
+                                                <span id="stake_approve_span"></span> 
+                                           </td>
+                                           <td>
+                                                <span id="stake_button_span"></span>                                                
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <td>
                                             <a href="pages/employer/employer_dashboard.html ">Employer</a> </td>
@@ -91,11 +99,15 @@
                             </div>
                         </td>
                     </tr>
+          
                 </table>
-
+            </div>
+            <div>
+               
             </div>
         </div>
     </header>
+    <center><small><span id="stake_status_span"></span></center>
     <center><span id="showAccount"></span></center>
     <main role=" main ">
         <section class="ui-section-hero ">
@@ -245,18 +257,23 @@
     <script src="assets/abi/i_jc_posting_factory_abi.js"></script>
     <script src="assets/abi/i_open_product_abi.js"></script>
     <script src="assets/abi/i_open_product_core_abi.js"></script>
+    <script src="assets/abi/i_jc_dashboard_factory_abi.js"></script>
+    <script src="assets/abi/i_erc20_abi.js"></script>
+    <script src="assets/abi/i_erc20_metadata_abi.js"></script>
     <script src="assets/abi/i_open_register_abi.js"></script>
-    
 
-    <script>
-        console.log(iJCJobCryptAbi);    
-    </script>    
     <script src="assets/js/jc_latest_jobs.js"></script>    
     <script src="assets/js/jc_popular_jobs.js"></script>
     <script src="assets/js/jc_featured_jobs.js"></script>
     <script src="assets/js/jc_search_jobs.js"></script>
     <script src="assets/js/jc_index.js"></script>
     <script src="assets/js/jobcrypt.js"></script>
+
+
+    <script>
+        console.log(iJCJobCryptAbi);    
+    </script>    
+
 	
 	<!-- Start of HubSpot Embed Code -->
   <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25669875.js"></script>

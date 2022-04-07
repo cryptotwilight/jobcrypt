@@ -200,7 +200,7 @@ function buildPostedDate() {
             console.log(response);
             var postedDate = response;
             var postedDateText = document.createTextNode("First posted : " + new Date(postedDate *1000));
-            h4Format2.appendChild(postedDateText);
+            h4Format2.appendChild(getSmallNode(postedDateText));
         });
 }
 
@@ -240,22 +240,34 @@ function buildJobDescription() {
         });
 }
 
-function buildApplyLink() {
-    var applyLinkSpan = document.getElementById("apply_link");
+
+var applyLinkSpan = document.getElementById("apply_link");
+
+function buildApplyLink() { 
+    jobPostingContract.methods.getApplyLink().call({from : account})
+    .then(function(response){
+        console.log(response);
+        applyLinkSpan.innerHTML = "<small style=\"color:green\">Apply Details: " + response + "</small>"; 
+    })
+    .catch(function(err){
+        console.log(err);
+        applyLink();
+    });
+}
+
+function applyLink() { 
     var applyLink = createTextButton("apply()", "Apply HERE");
     applyLinkSpan.appendChild(applyLink);
 }
 
 function apply() {
-    var applyDetailsSpan = document.getElementById("apply_details_span");
     jobPostingContract.methods.applyForJob().send({ from: account })
         .then(function(response) {
             console.log(response);
             jobPostingContract.methods.getApplyLink().call({ from: account })
                 .then(function(response) {
                     console.log(response);
-                    var link = reponse;
-                    applyDetailsSpan.innerHTML = "<b><font style='font-color : red'> " + link + "</font></b> ";
+                    buildApplyLink();
                 })
                 .catch(function(err) {
                     console.log(err);
@@ -268,5 +280,11 @@ function getSmall(str) {
     var small = document.createElement("small");
     small.appendChild(getTextNode(str));
     small.setAttribute("style", "color:blue")
+    return small; 
+}
+
+function getSmallNode(node) {
+    var small = document.createElement("small");
+    small.appendChild(node);    
     return small; 
 }

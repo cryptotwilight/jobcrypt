@@ -96,6 +96,25 @@ const iOpenRegisterAbi = [
 				"type": "address"
 			}
 		],
+		"name": "getName",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
 		"name": "isDerivativeAddress",
 		"outputs": [
 			{
@@ -135,8 +154,13 @@ const iOpenRegisterAbi = [
 			},
 			{
 				"internalType": "string",
-				"name": "_nameOrType",
+				"name": "_name",
 				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_version",
+				"type": "uint256"
 			}
 		],
 		"name": "registerAddress",
@@ -164,6 +188,25 @@ const iOpenRegisterAbi = [
 			}
 		],
 		"name": "registerDerivativeAddress",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "_registered",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "registerOpenVersionAddress",
 		"outputs": [
 			{
 				"internalType": "bool",

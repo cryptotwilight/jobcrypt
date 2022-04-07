@@ -29,22 +29,47 @@ const iJCJobPostingAbi = [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "_applicant",
+				"name": "_applicantAddress",
 				"type": "address"
 			}
 		],
 		"name": "getApplicantData",
 		"outputs": [
 			{
-				"internalType": "uint256",
-				"name": "_applicationDate",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_applicantNumber",
-				"type": "uint256"
-			},
+				"components": [
+					{
+						"internalType": "address",
+						"name": "applicant",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "applicationDate",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "link",
+						"type": "string"
+					}
+				],
+				"internalType": "struct IJobPosting.Applicant",
+				"name": "_applicant",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getApplyLink",
+		"outputs": [
 			{
 				"internalType": "string",
 				"name": "_applyLink",

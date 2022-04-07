@@ -12,17 +12,21 @@ var jcJobCryptContract;
 var jcPostingFactoryContract;
 var jcDashboardFactoryContract;
 var openProductCoreContract;
+var ierc20MetaDataContract;
 
 var jcPaymentManagerAddress;
 var jcJobCryptAddress;
 var jcPostingFactoryAddress;
 var jcDashboardFactoryAddress;
 var openProductCoreAddress;
+var ierc20MetaDataAddress;
 
 
 const web3 = new Web3(window.ethereum);
 
-const openRegisterAddress = "0x72fB0A0C17c15adff2422c89C732AE74c1c15862";
+console.log("web 3 " + web3.currentProvider);
+
+const openRegisterAddress = "0xA26618eab14a8c54daa4ebd024DA97a1ba27CF35";
 const openRegistryContract = new web3.eth.Contract(iOpenRegisterAbi, openRegisterAddress);
 
 const ipfs = window.IpfsHttpClientLite('https://ipfs.infura.io:5001')
@@ -133,7 +137,7 @@ async function configureCoreContracts() {
         .then(function(response) {
             console.log(response);
             jcDashboardFactoryAddress = response;
-            jcDashboardFactoryContract = getContract(iJCJobSeekerDashboard, jcDashboardFactoryAddress);
+            jcDashboardFactoryContract = getContract(iJCDashboardFactoryAbi, jcDashboardFactoryAddress);
         })
         .catch(function(err) {
             console.log(err);
@@ -151,6 +155,154 @@ async function configureCoreContracts() {
             console.log(err);
         });
 
+    openRegistryContract.methods.getAddress("JOBCRYPT_STAKE_ERC20_CA").call({from : account})
+    .then(function(response){
+        console.log(response);
+        ierc20MetaDataAddress = response; 
+        ierc20MetaDataContract = new web3.eth.Contract(ierc20MetadataAbi, ierc20MetaDataAddress);
+        initStakeValues();
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+
+}
+
+
+const stakeApproveSpan = ge("stake_approve_span");
+const stakeButtonSpan = ge("stake_button_span");
+const stakeStatusSpan = ge("stake_status_span");  
+
+var stakeCurrencyAddress; 
+var stakeCurrencySymbol;
+var minStakeAmount; 
+var stakeCurrencySymbol;
+
+
+async function initStakeValues() { 
+    getStakeErc20Currency();
+    getStakeCurrencySymbol();
+    getMinStakeAmount();
+     
+}
+
+async function getStakeStatus() { 
+    jcJobCryptContract.methods.isStaked().call({from : account})
+    .then(function(response){
+        console.log("checking stake");
+        console.log(response);
+        var staked = response; 
+        if(staked === true) {                    
+            stakeButtonSpan.innerHTML = "<small><a type=\"submit\" id=\"stake_button\" onclick=\"unstake()\" class=\"ui-component-button ui-component-button-small ui-component-button-primary \">Un-stake</a></small></span>";                    
+            getStakedAmount(stakeStatusSpan); 
+            stakeApproveSpan.innerHTML = "";
+        }
+        else{
+            stakeButtonSpan.innerHTML = "<small><a type=\"submit\" id=\"stake_button\" onclick=\"stake()\" class=\"ui-component-button ui-component-button-small ui-component-button-secondary \">Stake</a></small></span>"; 
+            stakeStatusSpan.innerHTML = "<b><i class=\"fa fa-thumbs-down\"></i> NOT STAKED - To Apply for jobs, please Stake :: "+formatCurrency(minStakeAmount)+" "+stakeCurrencySymbol+ "</b>";
+            stakeApproveSpan.innerHTML = "<small><a type=\"submit\" id=\"stake_approve_button\" onclick=\"approveStake()\" class=\"ui-component-button ui-component-button-small ui-component-button-primary \">Approve "+formatCurrency(minStakeAmount)+" "+stakeCurrencySymbol+ "</a></small>";
+        }
+    })
+    .catch(function(err){
+        console.log(err);
+
+    });
+}
+
+async function getStakedAmount(span) {
+    jcPaymentManagerContract.methods.getStakedAmount().call({from : account})
+    .then(function(response){
+        console.log(response);
+        stakeStatusSpan.innerHTML = "<b><i class=\"fa fa-thumbs-up\"></i> STAKED ("+formatCurrency(response)+" "+stakeCurrencySymbol+") </b>";
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+}
+
+async function getMinStakeAmount() { 
+    jcPaymentManagerContract.methods.getMinimumStakeAmount().call({from : account})
+    .then(function(response){
+        console.log(response);
+        minStakeAmount = response; 
+        getStakeStatus();
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+}
+
+async function getStakeErc20Currency(){
+    jcPaymentManagerContract.methods.getStakeErc20Address().call({from : account}) 
+    .then(function(response) {
+        console.log(response);
+        stakeCurrencyAddress = response; 
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+}
+
+async function getStakeCurrencySymbol() {
+   
+   ierc20MetaDataContract.methods.symbol().call({from : account})
+   .then(function(response){
+        console.log(response);
+        stakeCurrencySymbol = response;                
+   })
+   .catch(function(err){
+        console.log(err);
+   });
+}
+
+async function approveStake() { 
+    
+    ierc20MetaDataContract.methods.approve(jcPaymentManagerAddress, minStakeAmount).send({from : account})
+    .then(function(response){
+         console.log(response);
+         var stakeSpanButton = ge("stake_button");
+         stakeSpanButton.disabled = false; 
+         var approveStakeButton = ge("stake_approve_button");
+         approveStakeButton.disabled = true; 
+    })
+    .catch(function(err){
+         console.log(err);
+    });
+
+}
+
+async function stake(){
+    jcPaymentManagerContract.methods.stake(minStakeAmount).send({from : account})
+    .then(function(response){
+        console.log(response);
+        stakeStatusSpan.innerHTML = "<small style=\"color:green\"> STAKED :: "+formatCurrency(response)+"</small>"; 
+        getStakeStatus();                
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+}
+
+async function unstake() { 
+    jcPaymentManagerContract.methods.unstake().send({from : account})
+    .then(function(response){
+        console.log(response);
+        stakeStatusSpan.innerHTML = "<small style=\"color:orange\"> UNSTAKED :: "+formatCurrency(response)+"</small>";
+        getStakeStatus();
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+}
+
+function ge(element){
+    return document.getElementById(element);
+}
+
+
+
+function formatCurrency(number) {
+    return number / 1e18; 
 }
 
 function getContract(abi, address) {
@@ -219,7 +371,7 @@ function clearSelect(select) {
 }
 
 function clearTableNoHeader(table) {
-    var len = table.childNodes.length; 
+    var len = table.childNodes.length;
     for (var x = 0; x < len; x++) {
         table.remove(0);
     }

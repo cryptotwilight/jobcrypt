@@ -43,7 +43,7 @@
             <div class="ui-section-header__layout ui-layout-flex">
                 <!-- LOGO -->
                 <a href="../../index.html" role="link" aria-label="#">
-                    <img src="../../media/jclogo.svg" height="50" width="50" /><b>Job Crypt</b>
+                    <img src="../../media/jclogo.svg" height="50" width="50" /><b>Job Crypt</b><br/><small><center>[PUBLIC-ALPHA]</center></small></b>
                 </a>
                 <!-- MENU -->
                 <a href=".../../../../index.html"> <button type="submit" class="ui-component-button ui-component-button-medium ui-component-button-primary">Search Jobs</button> </a>
@@ -79,6 +79,14 @@
                             <h6>Select Dashboard</h6>
                             <table>
                                 <tr>
+                                    <td>                                           
+                                            <span id="stake_approve_span"></span> 
+                                       </td>
+                                       <td>
+                                            <span id="stake_button_span"></span>                                                
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td>
                                         <a href="../employer/employer_dashboard.html">Employer</a> </td>
                                     <td>
@@ -93,6 +101,7 @@
         </div>
         </div>
     </header>
+    <center><small><span id="stake_status_span"></span></center>
     <center><span id="showAccount"></span></center>
     <center><span id="job_posting_result"></span></center>
     <main role=" main ">
@@ -350,7 +359,9 @@
 
                     <div class="ui-component-card " style="text-align: center; ">
 
-                        <h2>Post your job</h2>
+                        <h2>Post your job</h2><br> 
+                        NOTE: Approval of two transactions required, first to save latest changes to your job second to post your job to JobCrypt
+                        
                         <span id="job_posting_post_display"></span>
                         <center>
                             <table>
@@ -399,17 +410,19 @@
         </div>
     </footer>
 
-
-    <script src="../../assets/abi/i_jc_jobcrypt_abi.js "></script>
-    <script src="../../assets/abi/i_jc_job_posting_abi.js "></script>
-    <script src="../../assets/abi/i_jc_job_posting_editor_abi.js "></script>
-    <script src="../../assets/abi/i_jc_employer_dashboard_abi.js "></script>
-    <script src="../../assets/abi/i_jc_job_seeker_dashboard_abi.js "></script>
-    <script src="../../assets/abi/i_jc_payment_manager_abi.js "></script>
-    <script src="../../assets/abi/i_jc_posting_factory_abi.js "></script>
-    <script src="../../assets/abi/i_open_product_abi.js "></script>
-    <script src="../../assets/abi/i_open_product_core_abi.js "></script>
-    <script src="../../assets/abi/i_open_register_abi.js "></script>
+    <script src="../../assets/abi/i_jc_jobcrypt_abi.js"></script>
+    <script src="../../assets/abi/i_jc_job_posting_abi.js"></script>
+    <script src="../../assets/abi/i_jc_employer_dashboard_abi.js"></script>
+    <script src="../../assets/abi/i_jc_job_seeker_dashboard_abi.js"></script>
+    <script src="../../assets/abi/i_jc_payment_manager_abi.js"></script>
+    <script src="../../assets/abi/i_jc_dashboard_factory_abi.js"></script>
+    <script src="../../assets/abi/i_jc_posting_factory_abi.js"></script>
+    <script src="../../assets/abi/i_open_product_abi.js"></script>
+    <script src="../../assets/abi/i_open_product_core_abi.js"></script>
+    <script src="../../assets/abi/i_jc_job_posting_editor_abi.js"></script>
+    <script src="../../assets/abi/i_erc20_abi.js"></script>
+    <script src="../../assets/abi/i_erc20_metadata_abi.js"></script>
+    <script src="../../assets/abi/i_open_register_abi.js"></script>
 
     <script>
         console.log(iJCJobCryptAbi);

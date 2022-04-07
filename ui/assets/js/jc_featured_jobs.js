@@ -15,7 +15,7 @@ async function getFeaturedJobs(){
 
 
 function buildFeaturedJobs(jobAddresses) {
-   // clearTableNoHeader(featuredJobsView);
+    //clearTableNoHeader(featuredJobsView);
 
     for( var x = 0; x < jobAddresses.length; x++){
 
@@ -27,7 +27,7 @@ function buildFeaturedJobs(jobAddresses) {
         .then(function(response){
             console.log(response);
             var jobTitle = response; 
-            var jobDetailLinkDestination = "pages/app/job_detail_template.html?postingAddress=" + postingAddress;
+            var jobDetailLinkDestination = "/pages/app/job_detail_template.html?postingAddress=" + postingAddress;
             jcJobPostingContract.methods.getFeature("COMPANY_NAME").call({from : account})
             .then(function(response){
                 console.log(response);

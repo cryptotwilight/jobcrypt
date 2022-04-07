@@ -32,8 +32,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/ethjs@0.3.4/dist/ethjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
     <!-- Web 3 -->
-    <script type="text/javacript" src="../../assets/abi/i_jc_jobcrypt_abi.js"></script>
-    <script type="text/javacript" src="../../assets/abi/i_jc_job_posting_abi.js"></script>
+
     <!-- TITLE -->
     <title>Job Crypt - Web 3 Jobs for Blockchain People</title>
 </head>
@@ -44,7 +43,7 @@
             <div class="ui-section-header__layout ui-layout-flex">
                 <!-- LOGO -->
                 <a href="../../index.html" role="link" aria-label="#">
-                    <img src="../../media/jclogo.svg" height="50" width="50" /><b>Job Crypt</b>
+                    <img src="../../media/jclogo.svg" height="50" width="50" /><b>Job Crypt</b><br/><small><center>[PUBLIC-ALPHA]</center></small></b>
                 </a>
                 <!-- MENU -->
                 <a href="post.html"> <button type="submit" class="ui-component-button ui-component-button-medium ui-component-button-primary">Post a Job</button> </a>
@@ -70,14 +69,34 @@
                         <td> <a id="connect_web_3">Connect Web 3</a></td>
                     </tr>
                     <tr>
-                        <td align="center">
-                            <font size="1">Earn Rewards</font>
+                        <td align="center ">
+                            <div class="ui-component-card ">
+                                <h6>Select Dashboard</h6>
+                                <table>
+                                    <tr>
+                                        <td>                                           
+                                                <span id="stake_approve_span"></span> 
+                                           </td>
+                                           <td>
+                                                <span id="stake_button_span"></span>                                                
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="pages/employer/employer_dashboard.html ">Employer</a> </td>
+                                        <td>
+                                            <a href="pages/jobseeker/job_seeker_dashboard.html "> | Job Seeker
+                                            </a></td>
+                                    </tr>
+                                </table>
+                            </div>
                         </td>
                     </tr>
                 </table>
             </div>
         </div>
     </header>
+    <center><small><span id="stake_status_span"></span></center>
     <center><span id="showAccount"></span></center>
     <main role="main">
         <section class="ui-section-hero">
@@ -117,11 +136,8 @@
                             </td>
                             <td valign="top">
                                 <h6 align="center">Search Results</h6>
-                                <div class=" ui-component-card ui-layout-column-6 ">
-                                    <table id="results_table">
-                                        <!-- populate result -->
-                                    </table>
-                                </div>
+                                <span id="search_results_span"><!-- populate result --></span>
+                              
                             </td>
                             <td valign="top">
                                 <h6 align="right">Featured Jobs</h6>
@@ -188,18 +204,25 @@
         </div>
     </footer>
 
-    <script>
-        var popular = true;
-        var latest = false;
-        var featured = true;
-        var search = true;
-        var jobseeker = false;
-        var employer = false;
-        var results = true;
-        var jobDetail = false;
-        var isConnected = false; 
-    </script>
+    <script src="../../assets/abi/i_jc_jobcrypt_abi.js"></script>
+    <script src="../../assets/abi/i_jc_job_posting_abi.js"></script>
+    <script src="../../assets/abi/i_jc_employer_dashboard_abi.js"></script>
+    <script src="../../assets/abi/i_jc_job_seeker_dashboard_abi.js"></script>
+    <script src="../../assets/abi/i_jc_payment_manager_abi.js"></script>
+    <script src="../../assets/abi/i_jc_posting_factory_abi.js"></script>
+    <script src="../../assets/abi/i_open_product_abi.js"></script>
+    <script src="../../assets/abi/i_open_product_core_abi.js"></script>
+    <script src="../../assets/abi/i_jc_dashboard_factory_abi.js"></script>
+    <script src="../../assets/abi/i_erc20_abi.js"></script>
+    <script src="../../assets/abi/i_erc20_metadata_abi.js"></script>
+    <script src="../../assets/abi/i_open_register_abi.js"></script>
+    
+    <script src="../../assets/js/jc_popular_jobs.js"></script>
+    <script src="../../assets/js/jc_featured_jobs.js"></script>
+    <script src="../../assets/js/jc_search_jobs.js"></script>
+    <script src="../../assets/js/jc_results.js"></script>
     <script src="../../assets/js/jobcrypt.js"></script>
+
 </body>
 
 </html>

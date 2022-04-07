@@ -1,5 +1,18 @@
 const iJCJobPostingEditorAbi = [
 	{
+		"inputs": [],
+		"name": "deactivate",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "_deactivated",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "string[]",

@@ -53,24 +53,48 @@ const iJCJobCryptAbi = [
 		"inputs": [
 			{
 				"internalType": "string",
-				"name": "feature",
+				"name": "_term",
 				"type": "string"
 			},
 			{
-				"internalType": "address",
-				"name": "_postingAddress",
-				"type": "address"
+				"internalType": "string",
+				"name": "_field",
+				"type": "string"
 			}
 		],
-		"name": "configureFeature",
+		"name": "findJobs",
 		"outputs": [
 			{
-				"internalType": "bool",
-				"name": "_configured",
-				"type": "bool"
+				"internalType": "address[]",
+				"name": "_postAddresses",
+				"type": "address[]"
 			}
 		],
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_page",
+				"type": "uint256"
+			}
+		],
+		"name": "getActiveJobPage",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "_activeJobAddresses",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_pageCount",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -129,6 +153,38 @@ const iJCJobCryptAbi = [
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "_posting",
+				"type": "address"
+			}
+		],
+		"name": "isPaidPosting",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "_paid",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "isStaked",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "_staked",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "_jobApplicantAddress",
 				"type": "address"
 			},
@@ -153,11 +209,78 @@ const iJCJobCryptAbi = [
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "_jobPosting",
+				"type": "address"
+			}
+		],
+		"name": "notifyDelistJob",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "_delisted",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "_posting",
 				"type": "address"
 			}
 		],
 		"name": "notifyPayment",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "_recieved",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_posting",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_productAddress",
+				"type": "address"
+			}
+		],
+		"name": "notifyProductPayment",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "_recieved",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_user",
+				"type": "address"
+			},
+			{
+				"internalType": "bool",
+				"name": "_isStaked",
+				"type": "bool"
+			}
+		],
+		"name": "notifyUserStaked",
 		"outputs": [
 			{
 				"internalType": "bool",

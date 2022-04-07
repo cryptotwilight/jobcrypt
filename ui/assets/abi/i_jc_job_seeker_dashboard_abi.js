@@ -1,4 +1,4 @@
-const iJCJobSeekerDashboard = [
+const iJCJobSeekerDashboardAbi = [
 	{
 		"inputs": [
 			{
