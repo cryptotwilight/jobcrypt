@@ -75,7 +75,13 @@ async function getAccount() {
     });
     account = accounts[0];
     showWallet.innerHTML = "<b>Connected Wallet :: " + account + "</b>";
-    configureCoreContracts();
+    configureCoreContracts()
+    .then(function(response){
+        loadWait();    
+    })
+    .catch(function(err){
+        console.log(err);
+    })
 }
 
 //We create a new MetaMask onboarding object to use in our app
@@ -101,6 +107,15 @@ const onClickConnect = async() => {
     }
 };
 
+var loadCount = 0; 
+
+function loadWait() { 
+    console.log("load count :: " + loadCount);
+    setTimeout(loadPageData, 3000);
+    console.log("loadCount :: " + loadCount);
+  
+}   
+
 async function configureCoreContracts() {
     console.log("registry contract");
     console.log(openRegistryContract);
@@ -110,6 +125,7 @@ async function configureCoreContracts() {
             console.log(response);
             jcPaymentManagerAddress = response;
             jcPaymentManagerContract = getContract(iJCPaymentManagerAbi, jcPaymentManagerAddress);
+            loadCount++;
         })
         .catch(function(err) {
             console.log(err);
@@ -120,6 +136,7 @@ async function configureCoreContracts() {
             console.log(response);
             jcJobCryptAddress = response;
             jcJobCryptContract = getContract(iJCJobCryptAbi, jcJobCryptAddress);
+            loadCount++;
         })
         .catch(function(err) {
             console.log(err);
@@ -129,6 +146,7 @@ async function configureCoreContracts() {
             console.log(response);
             jcPostingFactoryAddress = response;
             jcPostingFactoryContract = getContract(iJCPostingFactoryAbi, jcPostingFactoryAddress);
+            loadCount++;
         })
         .catch(function(err) {
             console.log(err);
@@ -138,6 +156,7 @@ async function configureCoreContracts() {
             console.log(response);
             jcDashboardFactoryAddress = response;
             jcDashboardFactoryContract = getContract(iJCDashboardFactoryAbi, jcDashboardFactoryAddress);
+            loadCount++;
         })
         .catch(function(err) {
             console.log(err);
@@ -148,8 +167,8 @@ async function configureCoreContracts() {
             console.log(response);
             openProductCoreAddress = response;
             openProductCoreContract = getContract(iOpenProductCoreAbi, openProductCoreAddress);
-            console.log(openProductCoreContract);
-            loadPageData();
+            console.log(openProductCoreContract);       
+            loadCount++;
         })
         .catch(function(err) {
             console.log(err);
@@ -161,6 +180,7 @@ async function configureCoreContracts() {
         ierc20MetaDataAddress = response; 
         ierc20MetaDataContract = new web3.eth.Contract(ierc20MetadataAbi, ierc20MetaDataAddress);
         initStakeValues();
+        loadCount++;
     })
     .catch(function(err){
         console.log(err);

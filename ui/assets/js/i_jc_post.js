@@ -393,7 +393,7 @@ function updatePaymentBox(productAddress, postingAddress) {
             var fee = response._fee;
             var currency = response._erc20Currency;
             var erc20 = response._erc20Address;
-            jobPostingFee.innerHTML = fee;
+            jobPostingFee.innerHTML = fee / 1e18;
             jobPostingCurrency.innerHTML = currency;
             jobPostingCurrencyErc20Address.innerHTML = erc20;
 
